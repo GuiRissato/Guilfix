@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+ import styled from 'styled-components';
 
 export const Title = styled.h3`
   font-style: normal;
@@ -39,6 +39,7 @@ export const VideoCardList = styled.ul`
   padding-bottom: 32px;
   list-style: none;
   display: flex;
+  /* cria o scrool dos videos */
   overflow-x: auto;
   flex-direction: row;
   

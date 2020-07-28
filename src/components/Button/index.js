@@ -12,6 +12,7 @@ const Button = styled.button`
     font-size: 16px;
     outline: none;
     border-radius: 5px;
+    /* tira o sublinhado do texto */
     text-decoration: none;
     display: inline-block;
     transition: opacity .3s;
@@ -19,6 +20,17 @@ const Button = styled.button`
     &:hover,
     &:focus {
     opacity: .5;
+    }
+
+    @media (max-width: 800px) {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--primary);
+      border-radius: 0;
+      border: 0;
+      text-align: center;
     }
 `;
 

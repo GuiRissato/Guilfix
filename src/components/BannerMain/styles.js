@@ -47,6 +47,7 @@ ContentAreaContainer.Category = styled.h1`
 
 ContentAreaContainer.Description = styled.p`
   @media (max-width: 800px) {
+    /* escondeu o conteiner na versao mobile */
     display: none;
   }
 `;
@@ -64,12 +65,14 @@ ContentAreaContainer.Title = styled.h2`
     text-align: center;
   }
 `;
-
+// o banner principal da pagina
 export const BannerMainContainer = styled.section`
   height: 80vh;
   position: relative;
   color: #fff;
+  /* vai passar a imagem de fundo tem que ser uma url */
   background-image: ${({ backgroundImage }) => `url(${backgroundImage})`}; 
+  /* usa todo espaco disponivel para preencher do tamanho do container 80 vh */
   background-size: cover;
   background-position: center;
   @media (max-width: 800px) {
@@ -99,7 +102,7 @@ export const BannerMainContainer = styled.section`
     background: linear-gradient(0deg, #141414 0%, transparent 100%);
   }
 `;
-
+// botao de assistir
 export const WatchButton = styled.button`
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
@@ -108,6 +111,7 @@ export const WatchButton = styled.button`
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
+  /* tira o contorno do botao */
   outline: none;
   border-radius: 5px;
   text-decoration: none;
@@ -119,6 +123,7 @@ export const WatchButton = styled.button`
   transition: opacity .3s;
   display: none;
   margin: 0 auto;
+  /* o botao so aparece no mobile */
   @media (max-width: 800px) {
     display: block;
   }

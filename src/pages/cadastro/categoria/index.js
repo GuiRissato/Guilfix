@@ -35,15 +35,17 @@ function CadastroCategoria() {
 
   useEffect(() => {
     console.log('alo alo brasil');
-    const URL = 'http://localhost:8080/categorias';
+    const URL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://guiflixalura.herokuapp.com/categorias';
     fetch(URL)
-      .then(async (respostaDoServidor)=>{
+      .then(async (respostaDoServidor) => {
         const resposta = await respostaDoServidor.json();
         setCategorias([
           ...resposta,
         ]);
       });
-// mesma coisa para resgatar os dados de formas diferentes a de cima e a mais pratica
+    // mesma coisa para resgatar os dados de formas diferentes a de cima e a mais pratica
     // .then((respostaDoServidor) => {
     //     return respostaDoServidor.json();
     // })

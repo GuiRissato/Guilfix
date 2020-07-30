@@ -1,57 +1,95 @@
-import React, {useState} from 'react';
-import PageDefault from '../../../components/PageDefault';
+/* eslint-disable linebreak-style */
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
+import Button from '../../../components/Button';
 
-
-function CadastroCategoria(){
+function CadastroCategoria() {
   const [categorias, setCategorias] = useState([]);
-  
-  const valoresIniciais ={
+
+  const valoresIniciais = {
     nome: '',
-    descricao: '' ,
-    cor:'',
+    descricao: '',
+    cor: '',
+  };
+
+  const [values, setValues] = useState(valoresIniciais);
+
+  function setValue(chave, valor) {
+    setValues({
+      ...values,
+      [chave]: valor,
+
+    });
   }
 
-  const [values, setValues] =  useState(valoresIniciais);
-
-function setValue(chave,valor){
-  setValues({
-    ...values,
-    [chave]: valor,
-
-  })
-
-}
-  
   // console.log(nomeCategoria);
-  
-function handleChange(infosDoEvento){
-  
-  setValue(
-    infosDoEvento.target.getAttribute('name'),
-    infosDoEvento.target.value
-  )
-}
 
+  function handleChange(infosDoEvento) {
+    setValue(
+      infosDoEvento.target.getAttribute('name'),
+      infosDoEvento.target.value,
+    );
+  }
 
-    return(
-      <PageDefault>
-        <h1>Cadastro de Categoria: {values.nome}</h1> 
+  useEffect(() => {
+    console.log('alo alo brasil');
+    const URL = 'http://localhost:8080/categorias';
+    fetch(URL)
+      .then(async (respostaDoServidor)=>{
+        const resposta = await respostaDoServidor.json();
+        setCategorias([
+          ...resposta,
+        ]);
+      });
+// mesma coisa para resgatar os dados de formas diferentes a de cima e a mais pratica
+    // .then((respostaDoServidor) => {
+    //     return respostaDoServidor.json();
+    // })
+    // .then((respostaConvertidaEmObjeto) => {
+    //     console.log(respostaConvertidaEmObjeto);
+    // })
+    // ;
+    // setTimeout(() => {
+    //   setCategorias([
+    //     ...categorias,
+    //     {
+    //       id: 1,
+    //       nome: 'Front End',
+    //       descricao: 'Uma categoria bacanudass',
+    //       cor: '#cbd1ff',
+    //     },
+    //     {
+    //       id: 2,
+    //       nome: 'Back End',
+    //       descricao: 'Uma categoria bacanudass',
+    //       cor: '#cbd1ff',
+    //     },
+    //   ]);
+    // }, 4 * 1000);
+  }, []);
+
+  return (
+    <PageDefault>
+      <h1>
+        Cadastro de Categoria:
+        {values.nome}
+      </h1>
       {/* com essa funcao no form tira o reload da pagina toda vez que for cadastrar alguma categoria */}
-      <form onSubmit={function handleSubmit(infosDoEvento){
+      <form onSubmit={function handleSubmit(infosDoEvento) {
         infosDoEvento.preventDefault();
-        console.log('Voce tentou enviar o form')
+        console.log('Voce tentou enviar o form');
         setCategorias([
           ...categorias,
-          values
+          values,
           // os ... pega todos os itens que ja foram escritos
         ]);
-        setValues(valoresIniciais)
-        
-      }}>
-      {/* {State} */}
-      <FormField
+        setValues(valoresIniciais);
+      }}
+      >
+        {/* {State} */}
+        <FormField
           label="Nome da Categoria: "
           type="text"
           name="nome"
@@ -61,8 +99,7 @@ function handleChange(infosDoEvento){
 
         <FormField
           label="Descrição: "
-          tag="textarea"
-          type="text"
+          type="textarea"
           name="descricao"
           value={values.descricao}
           onChange={handleChange}
@@ -96,7 +133,7 @@ function handleChange(infosDoEvento){
           />
         </label>
         </div> */}
-       
+
         {/* <div>
         <label>
           Descricao:
@@ -118,31 +155,33 @@ function handleChange(infosDoEvento){
           />
         </label>
         </div> */}
-        
-        <button>
+
+        <Button>
           Cadastrar
-        </button>
+        </Button>
 
       </form>
+      {categorias.length === 0 && (
+        <div>
+          Loading...
+        </div>
+      )}
 
-        <ul>
-          {categorias.map((categoria, indice)=>{
-            return (
-              <li key={`${categoria}${indice}`}>
-                {categoria.nome}
-              </li>
-            )
-          } )}
-        </ul>
+      <ul>
+        {categorias.map((categoria) => (
+          <li key={`${categoria.nome}`}>
+            {categoria.nome}
+          </li>
+        ))}
+      </ul>
 
-        {/* o to substitui o href */}
-        <Link to = "/">
-            Ir para Home
-        </Link>
-      </PageDefault>
-  
-    )
-  
-  }
+      {/* o to substitui o href */}
+      <Link to="/">
+        Ir para Home
+      </Link>
+    </PageDefault>
 
-  export default CadastroCategoria;
+  );
+}
+
+export default CadastroCategoria;

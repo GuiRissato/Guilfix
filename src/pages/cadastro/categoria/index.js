@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 function CadastroCategoria() {
   const [categorias, setCategorias] = useState([]);
@@ -14,27 +15,10 @@ function CadastroCategoria() {
     cor: '',
   };
 
-  const [values, setValues] = useState(valoresIniciais);
-
-  function setValue(chave, valor) {
-    setValues({
-      ...values,
-      [chave]: valor,
-
-    });
-  }
-
-  // console.log(nomeCategoria);
-
-  function handleChange(infosDoEvento) {
-    setValue(
-      infosDoEvento.target.getAttribute('name'),
-      infosDoEvento.target.value,
-    );
-  }
+  const { handleChange, values, clearForm } = useForm(valoresIniciais);
 
   useEffect(() => {
-    console.log('alo alo brasil');
+    // console.log('alo alo brasil');
     const URL = window.location.hostname.includes('localhost')
       ? 'http://localhost:8080/categorias'
       : 'https://guiflixalura.herokuapp.com/categorias';
@@ -45,32 +29,32 @@ function CadastroCategoria() {
           ...resposta,
         ]);
       });
-    // mesma coisa para resgatar os dados de formas diferentes a de cima e a mais pratica
-    // .then((respostaDoServidor) => {
-    //     return respostaDoServidor.json();
-    // })
-    // .then((respostaConvertidaEmObjeto) => {
-    //     console.log(respostaConvertidaEmObjeto);
-    // })
-    // ;
-    // setTimeout(() => {
-    //   setCategorias([
-    //     ...categorias,
-    //     {
-    //       id: 1,
-    //       nome: 'Front End',
-    //       descricao: 'Uma categoria bacanudass',
-    //       cor: '#cbd1ff',
-    //     },
-    //     {
-    //       id: 2,
-    //       nome: 'Back End',
-    //       descricao: 'Uma categoria bacanudass',
-    //       cor: '#cbd1ff',
-    //     },
-    //   ]);
-    // }, 4 * 1000);
   }, []);
+  // mesma coisa para resgatar os dados de formas diferentes a de cima e a mais pratica
+  // .then((respostaDoServidor) => {
+  //     return respostaDoServidor.json();
+  // })
+  // .then((respostaConvertidaEmObjeto) => {
+  //     console.log(respostaConvertidaEmObjeto);
+  // })
+  // ;
+  // setTimeout(() => {
+  //   setCategorias([
+  //     ...categorias,
+  //     {
+  //       id: 1,
+  //       nome: 'Front End',
+  //       descricao: 'Uma categoria bacanudass',
+  //       cor: '#cbd1ff',
+  //     },
+  //     {
+  //       id: 2,
+  //       nome: 'Back End',
+  //       descricao: 'Uma categoria bacanudass',
+  //       cor: '#cbd1ff',
+  //     },
+  //   ]);
+  // }, 4 * 1000);
 
   return (
     <PageDefault>
@@ -81,13 +65,13 @@ function CadastroCategoria() {
       {/* com essa funcao no form tira o reload da pagina toda vez que for cadastrar alguma categoria */}
       <form onSubmit={function handleSubmit(infosDoEvento) {
         infosDoEvento.preventDefault();
-        console.log('Voce tentou enviar o form');
+        // console.log('Voce tentou enviar o form');
         setCategorias([
           ...categorias,
           values,
           // os ... pega todos os itens que ja foram escritos
         ]);
-        setValues(valoresIniciais);
+        clearForm();
       }}
       >
         {/* {State} */}
@@ -171,8 +155,8 @@ function CadastroCategoria() {
 
       <ul>
         {categorias.map((categoria) => (
-          <li key={`${categoria.nome}`}>
-            {categoria.nome}
+          <li key={`${categoria.titulo}`}>
+            {categoria.titulo}
           </li>
         ))}
       </ul>

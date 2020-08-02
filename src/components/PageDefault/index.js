@@ -1,7 +1,7 @@
 import React from 'react';
+import styled, { css } from 'styled-components';
 import Menu from '../Menu';
 import Footer from '../Footer';
-import styled from 'styled-components';
 
 const Main = styled.main`
     background-color: var(--black);
@@ -10,28 +10,28 @@ const Main = styled.main`
     padding-top: 50px;
     padding-left: 5%;
     padding-right: 5% ;
-
-
+    ${({ paddingAll }) => css`
+    padding: ${paddingAll};
+    `}
 `;
 
-function PageDefault({children}){
-    return (
-        //o <> e um fragmento q colocamos para tirar um pouco da cascata criada no html  
+function PageDefault({ children, paddingAll }) {
+  return (
+  // o <> e um fragmento q colocamos para tirar um pouco da cascata criada no html
     <>
 
-        <Menu/>
-            <Main>
+      <Menu />
+      <Main paddingAll={paddingAll}>
 
-                {children}
+        {children}
 
-            </Main>
+      </Main>
 
-        <Footer/>
+      <Footer />
 
     </>
 
-    );
-
+  );
 }
 
 export default PageDefault;
